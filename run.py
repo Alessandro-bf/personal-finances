@@ -74,10 +74,13 @@ def add_transactions():
         amount = input("Enter the amount: ")
 
     description = input("Enter the description: ")
-    
-    transaction = [date, category, float(amount), description]
+
+    # To obtain the category value from the category dictionary. 
+    category_value = CATEGORIES[category.upper()]
+    transaction = [formatted_date, category_value, float(amount), description]
     
     worksheet.append_row(transaction)
+    
     print("Transaction added successfully!")
 
 add_transactions()
