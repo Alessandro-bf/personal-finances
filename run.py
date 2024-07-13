@@ -12,8 +12,22 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('personal_finances')
 
-records = SHEET.worksheet('records')
+def add_transactions():
+    """
+    Get transactions from the user and add them to the Google Sheet.
+    """
+    worksheet = SHEET.worksheet('transactions')
+    
+    print("Enter a new transaction")
+    
+    date = input("Enter the date (DD-MM-YYYY): ")
+    category = input("Enter the category: ")
+    amount = input("Enter the amount: ")
+    description = input("Enter the description: ")
+    
+    transaction = [date, category, amount, description]
+    
+    worksheet.append_row(transaction)
+    print("Transaction added successfully!")
 
-data = records.get_all_values()
-
-print(data)
+add_transactions()
