@@ -13,6 +13,14 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('personal_finances')
 
+CATEGORIES = {
+    "EX": "Expenses",
+    "IN": "Investments",
+    "EN": "Entertainment",
+    "DO": "Donations",
+    "SA": "Savings"
+}
+
 def valid_date(date):
     """
     Validate date format DD-MM-YYYY and check if it is a valid date.
@@ -22,6 +30,12 @@ def valid_date(date):
         return True
     except ValueError:
         return False
+
+def valid_category(category):
+    """
+    Validate category input (first two letters, case-insensitive)
+    """
+    return category.upper() in CATEGORIES
 
 def add_transactions():
     """
@@ -38,7 +52,15 @@ def add_transactions():
         print("Please enter the date in DD-MM-YYYY format.\n")
         date = input("Enter the date (DD-MM-YYYY): ")
     
-    category = input("Enter the category: ")
+    print("Enter the first two letters of the category")
+    print("e.g., Expenses(EX), Investment(IN), Entertainment(EN), Donation(DO), Savings(SA)\n")
+    
+    category = input("Enter the category (EX, IN, EN, DO, SA): ")
+    while not valid_category(category):
+        print("Invalid category. Please enter one of the following: EX, IN, EN, DO, SA")
+        print("e.g., Expenses(EX), Investments(IN), Entertainment(EN), Donations(DO), Savings(SA)\n")
+        category = input("Enter the category (EX, IN, EN, DO, SA): ")
+
     amount = input("Enter the amount: ")
     description = input("Enter the description: ")
     
