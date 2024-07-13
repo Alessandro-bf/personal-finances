@@ -1,6 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime
+import re
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -37,6 +38,12 @@ def valid_category(category):
     """
     return category.upper() in CATEGORIES
 
+def valid_amount(amount):
+    """
+    Validate amount format to ensure it is a number with two decimals or an integer.
+    """
+    return bool(re.match(r'^\d+(\.\d{2})?$', amount))
+
 def add_transactions():
     """
     Get transactions from the user and add them to the Google Sheet.
@@ -62,9 +69,13 @@ def add_transactions():
         category = input("Enter the category (EX, IN, EN, DO, SA): ")
 
     amount = input("Enter the amount: ")
+    while not valid_amount(amount):
+        print("Invalid amount. Please enter a valid number with two decimals.")
+        amount = input("Enter the amount: ")
+
     description = input("Enter the description: ")
     
-    transaction = [date, category, amount, description]
+    transaction = [date, category, float(amount), description]
     
     worksheet.append_row(transaction)
     print("Transaction added successfully!")
