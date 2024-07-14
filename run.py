@@ -71,11 +71,11 @@ def add_transactions():
     
     print("Enter a new transaction")
     
-    date = input("Enter the date (DD/MM/YYYY): ")
+    date = input("Enter the date (DD/MM/YYYY): \n")
     while not valid_date(date):
         print("Invalid date format or invalid date.") 
         print("Please enter the date in DD/MM/YYYY format.\n")
-        date = input("Enter the date (DD/MM/YYYY): ")
+        date = input("Enter the date (DD/MM/YYYY): \n")
     
     # Convert date to a datetime object for validation
     date_obj = datetime.strptime(date, '%d/%m/%Y')
@@ -85,21 +85,21 @@ def add_transactions():
     print("Enter the first two letters of the category")
     print("e.g., Expenses(EX), Investments(IN), Entertainment(EN), Donations(DO), Savings(SA)\n")
     
-    category = input("Enter the category (EX, IN, EN, DO, SA): ")
+    category = input("Enter the category (EX, IN, EN, DO, SA): \n")
     while not valid_category(category):
         print("Invalid category. Please enter one of the following: EX, IN, EN, DO, SA")
         print("e.g., Expenses(EX), Investments(IN), Entertainment(EN), Donations(DO), Savings(SA)\n")
-        category = input("Enter the category (EX, IN, EN, DO, SA): ")
+        category = input("Enter the category (EX, IN, EN, DO, SA): \n")
 
-    amount = input("Enter the amount: ")
+    amount = input("Enter the amount: \n")
     while not valid_amount(amount):
         print("Invalid amount. Please enter a valid number with two decimals.")
-        amount = input("Enter the amount: ")
+        amount = input("Enter the amount: \n")
 
-    description = input("Enter the description: ")
+    description = input("Enter the description: \n")
     while not valid_description(description):
         print("Description cannot be empty. Please enter a description.")
-        description = input("Enter the description: ")
+        description = input("Enter the description: \n")
 
     # To obtain the category value from the categories dictionary. 
     category_value = CATEGORIES[category.upper()]
@@ -224,12 +224,12 @@ def main():
         print("3. Totalize by category per month and year")
         print("4. Totalize by month and year")
         print("5. Exit")
-        choice = input("Enter your choice (1, 2, 3, 4 or 5): ")
+        choice = input("Enter your choice (1, 2, 3, 4 or 5): \n")
 
         if choice == '1':
             add_transactions()
         elif choice == '2':
-            transaction_to_delete = int(input("Enter the transaction number to delete: "))
+            transaction_to_delete = int(input("Enter the transaction number to delete: \n"))
             delete_transaction(transaction_to_delete)
         elif choice == '3':
             totalize_by_category_month_year()
