@@ -7,7 +7,7 @@ SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
-    ]
+]
 
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
@@ -24,10 +24,10 @@ CATEGORIES = {
 
 def valid_date(date):
     """
-    Validate date format DD-MM-YYYY and check if it is a valid date.
+    Validate date format DD/MM/YYYY and check if it is a valid date.
     """
     try:
-        datetime.strptime(date, '%d-%m-%Y')
+        datetime.strptime(date, '%d/%m/%Y')
         return True
     except ValueError:
         return False
@@ -65,11 +65,16 @@ def add_transactions():
     
     print("Enter a new transaction")
     
-    date = input("Enter the date (DD-MM-YYYY): ")
+    date = input("Enter the date (DD/MM/YYYY): ")
     while not valid_date(date):
         print("Invalid date format or invalid date.") 
-        print("Please enter the date in DD-MM-YYYY format.\n")
-        date = input("Enter the date (DD-MM-YYYY): ")
+        print("Please enter the date in DD/MM/YYYY format.\n")
+        date = input("Enter the date (DD/MM/YYYY): ")
+    
+    # Convert date to a datetime object for validation
+    date_obj = datetime.strptime(date, '%d/%m/%Y')
+    # Format the date back to DD/MM/YYYY
+    formatted_date = date_obj.strftime('%d/%m/%Y')
     
     print("Enter the first two letters of the category")
     print("e.g., Expenses(EX), Investments(IN), Entertainment(EN), Donations(DO), Savings(SA)\n")
@@ -93,7 +98,7 @@ def add_transactions():
     # Get the next transaction number
     transaction_number = get_next_transaction_number(worksheet) 
 
-    transaction = [transaction_number, date, category_value, float(amount), description]
+    transaction = [transaction_number, formatted_date, category_value, float(amount), description]
     
     worksheet.append_row(transaction)
     
@@ -114,6 +119,34 @@ def delete_transaction(transaction_number):
     
     print(f"Transaction {transaction_number} not found.")
 
+def totalize_by_category_month_year():
+    """
+    Process transactions to totalize by category, month, and year.
+    """
+    worksheet = SHEET.worksheet('transactions')
+    transactions = worksheet.get_all_records()
+
+    totals = {}
+    for transaction in transactions:
+        date_str = transaction['Date'] 
+        category = transaction['Category']
+        amount = float(transaction['Amount'])
+        
+        # Convert date string to datetime object
+        date_obj = datetime.strptime(date_str, '%d/%m/%Y')
+        
+        # Create key based on category, month, and year
+        key = (category, date_obj.strftime('%Y-%m'))
+        
+        if key not in totals:
+            totals[key] = 0.0
+        totals[key] += amount
+
+    # Output the totals
+    for key, total in totals.items():
+        category, month_year = key
+        print(f"{category} - {month_year}: {total:.2f}")
+
 
 def main():
     """
@@ -123,8 +156,9 @@ def main():
         print("Choose an action:")
         print("1. Add a transaction")
         print("2. Delete a transaction")
-        print("3. Exit")
-        choice = input("Enter your choice (1, 2, or 3): ")
+        print("3. Totalize by category per month and year")
+        print("4. Exit")
+        choice = input("Enter your choice (1, 2, 3 or 4): ")
 
         if choice == '1':
             add_transactions()
@@ -132,9 +166,11 @@ def main():
             transaction_to_delete = int(input("Enter the transaction number to delete: "))
             delete_transaction(transaction_to_delete)
         elif choice == '3':
+            totalize_by_category_month_year()
+        elif choice == '4':
             print("Exiting the program.")
             break
         else:
-            print("Invalid choice. Please enter 1, 2, or 3.")
+            print("Invalid choice. Please enter 1, 2, 3, or 4.")
 
 main()
