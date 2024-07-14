@@ -99,4 +99,22 @@ def add_transactions():
     
     print("Transaction added successfully!")
 
+def delete_transaction(transaction_number):
+    """
+    Delete a transaction from the Google Sheet using the transaction number.
+    """
+    worksheet = SHEET.worksheet('transactions')
+    transactions = worksheet.get_all_values()
+
+    for trx, row in enumerate(transactions):
+        if row[0].isdigit() and int(row[0]) == transaction_number:
+            worksheet.delete_rows(trx + 1) 
+            print(f"Transaction {transaction_number} deleted successfully!")
+            return
+    
+    print(f"Transaction {transaction_number} not found.")
+
 add_transactions()
+
+transaction_to_delete = int(input("Enter the transaction number to delete: "))
+delete_transaction(transaction_to_delete)
