@@ -44,6 +44,12 @@ def valid_amount(amount):
     """
     return bool(re.match(r'^\d+(\.\d{2})?$', amount))
 
+def valid_description(description):
+    """
+    Validate that the description is not empty.
+    """
+    return bool(description.strip())
+
 def get_next_transaction_number(worksheet):
     """
     Get the next transaction number by finding the maximum transaction number in the worksheet and adding 1.
@@ -91,6 +97,9 @@ def add_transactions():
         amount = input("Enter the amount: ")
 
     description = input("Enter the description: ")
+    while not valid_description(description):
+        print("Description cannot be empty. Please enter a description.")
+        description = input("Enter the description: ")
 
     # To obtain the category value from the categories dictionary. 
     category_value = CATEGORIES[category.upper()]
