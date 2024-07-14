@@ -162,6 +162,46 @@ def totalize_by_category_month_year():
 
     print("Totals by category, month, and year have been stored in 'category_totals' Google Sheet.")
 
+def totalize_by_month_year():
+    """
+    Process transactions to totalize by month and year.
+    """
+    worksheet = SHEET.worksheet('transactions')
+    transactions = worksheet.get_all_records()
+
+    totals = {}
+    for transaction in transactions:
+        date_str = transaction['Date']
+        amount = float(transaction['Amount'])
+        
+        # Convert date string to datetime object
+        date_obj = datetime.strptime(date_str, '%d/%m/%Y')
+        
+        # Create key based on month and year
+        key = date_obj.strftime('%Y-%m')
+        
+        if key not in totals:
+            totals[key] = 0.0
+        totals[key] += amount
+
+    # Prepare data for monthly_totals Google Sheet
+    results = [['Year-Month', 'Total Amount']]
+    for key, total in totals.items():
+        results.append([key, f"{total:.2f}"])
+    
+    # Add results to monthly_totals Google Sheet
+    try:
+        monthly_totals = SHEET.worksheet('monthly_totals')
+    except gspread.WorksheetNotFound:
+        monthly_totals = SHEET.add_worksheet(title='monthly_totals', rows='100', cols='20')
+
+    # Clear existing content in monthly_totals Google Sheet
+    monthly_totals.clear()
+
+    # Update monthly_totals Google Sheet with the results
+    monthly_totals.update(results, 'A1')
+
+    print("Totals by month and year have been stored in 'monthly_totals' Google Sheet.")
 
 def main():
     """
@@ -173,8 +213,9 @@ def main():
         print("1. Add a transaction")
         print("2. Delete a transaction")
         print("3. Totalize by category per month and year")
-        print("4. Exit")
-        choice = input("Enter your choice (1, 2, 3 or 4): ")
+        print("4. Totalize by month and year")
+        print("5. Exit")
+        choice = input("Enter your choice (1, 2, 3, 4 or 5): ")
 
         if choice == '1':
             add_transactions()
@@ -184,9 +225,11 @@ def main():
         elif choice == '3':
             totalize_by_category_month_year()
         elif choice == '4':
+            totalize_by_month_year()
+        elif choice == '5':
             print("Exiting the program.")
             break
         else:
-            print("Invalid choice. Please enter 1, 2, 3, or 4.")
+            print("Invalid choice. Please enter 1, 2, 3, 4 or 5")
 
 main()
