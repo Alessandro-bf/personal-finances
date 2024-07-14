@@ -44,6 +44,18 @@ def valid_amount(amount):
     """
     return bool(re.match(r'^\d+(\.\d{2})?$', amount))
 
+def get_next_transaction_number(worksheet):
+    """
+    Get the next transaction number by finding the maximum transaction number in the worksheet and adding 1.
+    If there are no transactions, start with 1.
+    """
+    transactions = worksheet.get_all_values()
+    if len(transactions) > 1:  # Assuming the first row is the header
+        transaction_numbers = [int(row[0]) for row in transactions[1:] if row[0].isdigit()]
+        if transaction_numbers:
+            return max(transaction_numbers) + 1
+    return 1
+
 def add_transactions():
     """
     Get transactions from the user and add them to the Google Sheet.
@@ -75,9 +87,13 @@ def add_transactions():
 
     description = input("Enter the description: ")
 
-    # To obtain the category value from the category dictionary. 
+    # To obtain the category value from the categories dictionary. 
     category_value = CATEGORIES[category.upper()]
-    transaction = [formatted_date, category_value, float(amount), description]
+
+    # Get the next transaction number
+    transaction_number = get_next_transaction_number(worksheet) 
+
+    transaction = [transaction_number, date, category_value, float(amount), description]
     
     worksheet.append_row(transaction)
     
