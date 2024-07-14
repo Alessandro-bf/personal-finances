@@ -72,7 +72,7 @@ def add_transactions():
         date = input("Enter the date (DD-MM-YYYY): ")
     
     print("Enter the first two letters of the category")
-    print("e.g., Expenses(EX), Investment(IN), Entertainment(EN), Donation(DO), Savings(SA)\n")
+    print("e.g., Expenses(EX), Investments(IN), Entertainment(EN), Donations(DO), Savings(SA)\n")
     
     category = input("Enter the category (EX, IN, EN, DO, SA): ")
     while not valid_category(category):
@@ -114,7 +114,27 @@ def delete_transaction(transaction_number):
     
     print(f"Transaction {transaction_number} not found.")
 
-add_transactions()
 
-transaction_to_delete = int(input("Enter the transaction number to delete: "))
-delete_transaction(transaction_to_delete)
+def main():
+    """
+    Main function to choose between adding or deleting a transaction.
+    """
+    while True:
+        print("Choose an action:")
+        print("1. Add a transaction")
+        print("2. Delete a transaction")
+        print("3. Exit")
+        choice = input("Enter your choice (1, 2, or 3): ")
+
+        if choice == '1':
+            add_transactions()
+        elif choice == '2':
+            transaction_to_delete = int(input("Enter the transaction number to delete: "))
+            delete_transaction(transaction_to_delete)
+        elif choice == '3':
+            print("Exiting the program.")
+            break
+        else:
+            print("Invalid choice. Please enter 1, 2, or 3.")
+
+main()
