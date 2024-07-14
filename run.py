@@ -142,10 +142,25 @@ def totalize_by_category_month_year():
             totals[key] = 0.0
         totals[key] += amount
 
-    # Output the totals
+    # Prepare data for category_totals Google Sheet
+    results = [['Category', 'Year-Month', 'Total Amount']]
     for key, total in totals.items():
         category, month_year = key
-        print(f"{category} - {month_year}: {total:.2f}")
+        results.append([category, month_year, f"{total:.2f}"])
+    
+    # Add results to category_totals Google Sheet
+    try:
+        category_totals = SHEET.worksheet('category_totals')
+    except gspread.WorksheetNotFound:
+        category_totals = SHEET.add_worksheet(title='category_totals', rows='100', cols='20')
+
+    # Clear existing content in category_totals Google Sheet
+    category_totals.clear()
+
+    # Update category_totals Google Sheet with the results
+    category_totals.update(results, 'A1')
+
+    print("Totals by category, month, and year have been stored in 'category_totals' Google Sheet.")
 
 
 def main():
@@ -153,6 +168,7 @@ def main():
     Main function to choose between adding or deleting a transaction.
     """
     while True:
+        print()
         print("Choose an action:")
         print("1. Add a transaction")
         print("2. Delete a transaction")
