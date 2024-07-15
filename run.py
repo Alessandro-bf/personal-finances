@@ -143,6 +143,30 @@ def delete_transaction(transaction_number):
     print(f"Transaction {transaction_number} not found.")
 
 
+def show_last_5_transactions():
+    """Display the last 5 transactions from the Google Sheet."""
+    worksheet = SHEET.worksheet('transactions')
+    transactions = worksheet.get_all_values()
+    
+    if len(transactions) <= 1:
+        print("No transactions available.")
+        return
+
+    # Extract the header and the last 5 transactions (excluding header)
+    headers = transactions[0]
+    last_5_transactions = transactions[-5:]
+
+    if len(transactions) > 5:
+        print("\nLast 5 Transactions:")
+        print(headers)
+        for trx in last_5_transactions:
+            print(trx)
+    else:
+        print("\nLast 5 Transactions:")
+        for trx in last_5_transactions:
+            print(trx)
+
+
 def totalize_by_category_month_year():
     """Process transactions to totalize by category, month, and year."""
     worksheet = SHEET.worksheet('transactions')
@@ -236,10 +260,17 @@ def main():
         print("Choose an action:")
         print("1. Add a transaction")
         print("2. Delete a transaction")
-        print("3. Totalize by category per month and year")
-        print("4. Totalize by month and year")
-        print("5. Exit")
-        choice = input("Enter your choice (1, 2, 3, 4 or 5): \n")
+        print("3. Show last 5 transactions")
+        print("4. Totalize by category, month and year")
+        print("5. Totalize by month and year")
+        print("6. Exit")
+        print()
+        print("Important: To see the Google Sheet details,"
+              "copy the following link in your browser:")
+        print("https://docs.google.com/spreadsheets/d/"
+              "1KUZxGqBcDwc4gIKezwP4BvFFIS0X57Xou9l9Y5biMwY/edit?usp=sharing")
+        print()
+        choice = input("Enter your choice (1, 2, 3, 4, 5 or 6): \n")
 
         if choice == '1':
             add_transactions()
@@ -249,14 +280,16 @@ def main():
             ))
             delete_transaction(transaction_to_delete)
         elif choice == '3':
-            totalize_by_category_month_year()
+            show_last_5_transactions()
         elif choice == '4':
-            totalize_by_month_year()
+            totalize_by_category_month_year()
         elif choice == '5':
+            totalize_by_month_year()
+        elif choice == '6':
             print("Exiting the program.")
             break
         else:
-            print("Invalid choice. Please enter 1, 2, 3, 4 or 5")
+            print("Invalid choice. Please enter 1, 2, 3, 4, 5 or 6")
 
 
 main()
