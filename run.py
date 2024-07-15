@@ -83,12 +83,12 @@ def add_transactions():
     formatted_date = date_obj.strftime('%d/%m/%Y')
     
     print("Enter the first two letters of the category")
-    print("e.g., Expenses(EX), Investments(IN), Entertainment(EN), Donations(DO), Savings(SA)\n")
+    print("e.g., Expenses(EX),Investments(IN),Entertainment(EN),Donations(DO),Savings(SA)\n")
     
     category = input("Enter the category (EX, IN, EN, DO, SA): \n")
     while not valid_category(category):
         print("Invalid category. Please enter one of the following: EX, IN, EN, DO, SA")
-        print("e.g., Expenses(EX), Investments(IN), Entertainment(EN), Donations(DO), Savings(SA)\n")
+        print("e.g., Expenses(EX),Investments(IN),Entertainment(EN),Donations(DO),Savings(SA)\n")
         category = input("Enter the category (EX, IN, EN, DO, SA): \n")
 
     amount = input("Enter the amount: \n")
