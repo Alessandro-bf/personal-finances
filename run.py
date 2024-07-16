@@ -147,7 +147,7 @@ def show_last_5_transactions():
     """Display the last 5 transactions from the Google Sheet."""
     worksheet = SHEET.worksheet('transactions')
     transactions = worksheet.get_all_values()
-    
+
     if len(transactions) <= 1:
         print("No transactions available.")
         return
@@ -265,8 +265,8 @@ def main():
         print("5. Totalize by month and year")
         print("6. Exit")
         print()
-        print("Important: To see the Google Sheet details,"
-              "copy the following link in your browser:")
+        print("Important: To see Google Sheets details, "
+              "copy the next link in your browser:")
         print("https://docs.google.com/spreadsheets/d/"
               "1KUZxGqBcDwc4gIKezwP4BvFFIS0X57Xou9l9Y5biMwY/edit?usp=sharing")
         print()
