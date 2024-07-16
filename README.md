@@ -1,7 +1,7 @@
 <h1 align="center">Personal Finances Traker</h1>
 
-[View the live project here.](https://personal-finances-tracker-527ecf5f502e.herokuapp.com/)
-[View the Google Sheet here.](https://docs.google.com/spreadsheets/d/1KUZxGqBcDwc4gIKezwP4BvFFIS0X57Xou9l9Y5biMwY/edit?usp=sharing)
+- [View the live project here.](https://personal-finances-tracker-527ecf5f502e.herokuapp.com/)
+- [View the Google Sheet here.](https://docs.google.com/spreadsheets/d/1KUZxGqBcDwc4gIKezwP4BvFFIS0X57Xou9l9Y5biMwY/edit?usp=sharing)
 
 This Google Sheets finance tracker simplifies personal finance management. Easily log transactions, get automated summaries, and insightful analysis. Enhance budgeting, track expenses, and achieve savings goals for a secure financial future.
 
