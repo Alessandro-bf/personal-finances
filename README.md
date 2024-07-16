@@ -1,6 +1,7 @@
 <h1 align="center">Personal Finances Traker</h1>
 
 [View the live project here.](https://personal-finances-tracker-527ecf5f502e.herokuapp.com/)
+[View the Google Sheet here.](https://docs.google.com/spreadsheets/d/1KUZxGqBcDwc4gIKezwP4BvFFIS0X57Xou9l9Y5biMwY/edit?usp=sharing)
 
 This Google Sheets finance tracker simplifies personal finance management. Easily log transactions, get automated summaries, and insightful analysis. Enhance budgeting, track expenses, and achieve savings goals for a secure financial future.
 
@@ -82,6 +83,7 @@ The program is designed to manage personal finances using Google Sheets. It allo
 
     - main(): Provides a menu for the user to choose between adding a transaction, deleting a transaction, show the last 5 stored transactions, totalizing by category/month/year, totalizing by month/year, or exiting the program. It continuously loops until the user decides to exit.
 
+<h2 align="center"><img src="images/main_menu.png"></h2>
 
 ### Detailed Flow
 
@@ -91,25 +93,45 @@ The program is designed to manage personal finances using Google Sheets. It allo
     - The program determines the next transaction number.
     - The transaction is added to the 'transactions' worksheet in the Google Sheet.
 
+<h2 align="center"><img src="images/add_trx_1.png"></h2>
+
+<h2 align="center"><img src="images/add_trx.png"></h2>
+
 2. Deleting a Transaction:
     - The user is prompted to enter the transaction number to delete.
     - The program searches for the transaction number and deletes the corresponding row if found.
+
+<h2 align="center"><img src="images/delete_trx_2.png"></h2>
+
+<h2 align="center"><img src="images/delete_trx.png"></h2>
 
 3. Show last 5 transactions:
     - The program process all the transactions stored in the 'transactions' worksheet and get the last 5.
     - When the program shows the transactions on the console it adds the headers at the top.
     - If the program doesn't find transactions it print the message 'No transactions available.' 
 
+<h2 align="center"><img src="images/show_5_trx_3.png"></h2>
+
 4. Totalizing by Category, Month, and Year:
     - The program processes all transactions and calculates the total amount for each category by month and year.
     - The results are stored in the 'category_totals' worksheet.
+
+<h2 align="center"><img src="images/by_cat_month_year_4.png"></h2>
+
+<h2 align="center"><img src="images/by_cat_month_year.png"></h2>
 
 5. Totalizing by Month and Year:
     - The program processes all transactions and calculates the total amount for each month and year.
     - The results are stored in the 'monthly_totals' worksheet.
 
+<h2 align="center"><img src="images/by_month_year_5.png"></h2>
+
+<h2 align="center"><img src="images/by_month_year.png"></h2>
+
 6. Exiting:
     - The user can exit the program by selecting the appropriate menu option.
+
+<h2 align="center"><img src="images/exit_6.png"></h2>
 
 
 ### Usage
@@ -143,7 +165,9 @@ To use this program:
 
 The style checker was used to compare the code against the main conventions recommended for Python in PEP 8 (Style Guide for Python Code) and PEP 257 (Docstring Conventions). Helping with a fine tuning to makes it easy for others to read.
 
--   [Python 3 Style Checker](https://www.codewof.co.nz/style/python3/) - [Results](images/python_checker.png)
+-   [Python 3 Style Checker](https://www.codewof.co.nz/style/python3/)
+
+<h2 align="center"><img src="images/python_checker.png"></h2>
 
 ### Testing User Stories from User Experience (UX) Section
 
